@@ -3,7 +3,6 @@
 buildscript {
     repositories {
         mavenCentral()
-        mavenLocal()
         jcenter()
         maven {
             name = "forge"
@@ -37,8 +36,8 @@ repositories {
 
 apply plugin: 'net.minecraftforge.gradle.forge'
 
-//sourceCompatibility = 1.8
-//targetCompatibility = 1.8
+sourceCompatibility = 8
+targetCompatibility = 8
 
 group= "org.undergroundbunker.harshworld" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "harshworld"
