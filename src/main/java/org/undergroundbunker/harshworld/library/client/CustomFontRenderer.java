@@ -28,7 +28,7 @@ public class CustomFontRenderer extends FontRenderer {
     public CustomFontRenderer(GameSettings gameSettingsIn, ResourceLocation location, TextureManager textureManagerIn) {
         super(gameSettingsIn, location, textureManagerIn, true);
     }
-    
+
     @Nonnull
     @Override
     public List<String> listFormattedStringToWidth(@Nonnull String str, int wrapWidth) {
