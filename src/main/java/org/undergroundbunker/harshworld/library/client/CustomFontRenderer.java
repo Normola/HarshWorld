@@ -28,31 +28,29 @@ public class CustomFontRenderer extends FontRenderer {
     public CustomFontRenderer(GameSettings gameSettingsIn, ResourceLocation location, TextureManager textureManagerIn) {
         super(gameSettingsIn, location, textureManagerIn, true);
     }
+    
+    @Nonnull
+    @Override
+    public List<String> listFormattedStringToWidth(@Nonnull String str, int wrapWidth) {
+        return Arrays.asList(this.wrapFormattedStringToWidth(str, wrapWidth).split("\n"));
+    }
 
+    protected String wrapFormattedStringToWidth(String str, int wrapWidth) {
+        int i = this.sizeStringToWidth(str, wrapWidth);
 
-    // TODO: Find out why these are private
-//    @Nonnull
-//    @Override
-//    public List<String> listFormattedStringToWidth(@Nonnull String str, int wrapWidth) {
-//        return Arrays.asList(this.wrapFormattedStringToWidth(str, wrapWidth).split("\n"));
-//    }
-//
-//    protected String wrapFormattedStringToWidth(String str, int wrapWidth) {
-//        int i = this.sizeStringToWidth(str, wrapWidth);
-//
-//        if (str.length() <= i)
-//        {
-//            return str;
-//        }
-//        else
-//        {
-//            String s = str.substring(0, i);
-//            char c0 = str.charAt(i);
-//            boolean flag = c0 == 32 || c0 == 10;
-//            String s1 = getCustomFormatFromString(s) + str.substring(i + (flag ? 1 : 0));
-//            return s + "\n" + this.wrapFormattedStringToWidth(s1, wrapWidth);
-//        }
-//    }
+        if (str.length() <= i)
+        {
+            return str;
+        }
+        else
+        {
+            String s = str.substring(0, i);
+            char c0 = str.charAt(i);
+            boolean flag = c0 == 32 || c0 == 10;
+            String s1 = getCustomFormatFromString(s) + str.substring(i + (flag ? 1 : 0));
+            return s + "\n" + this.wrapFormattedStringToWidth(s1, wrapWidth);
+        }
+    }
 
     public static String getCustomFormatFromString(String text) {
         String s = "";

@@ -1,0 +1,16 @@
+[{
+    "modid" : "harshworld",
+    "name": "Harsh World",
+    "description": "A nice place to visit but I wouldn't want to live there...",
+    "version": "${version}",
+    "url": "https://github.com/Normola/HarshWorld",
+    "updateUrl": "",
+    "authorList": [
+        "JT"
+    ],
+    "credits": "JT, major props to Slime Knights!",
+    logoFile: "",
+    "screenshots": "",
+    "parent": "",
+    "dependencies": ""
+}]
