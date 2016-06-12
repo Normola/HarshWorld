@@ -2,39 +2,92 @@
 // For those who want the bleeding edge
 buildscript {
     repositories {
+        mavenCentral()
+        mavenLocal()
         jcenter()
         maven {
             name = "forge"
             url = "http://files.minecraftforge.net/maven"
+        }
+        maven {
+            name = "sonatype"
+            url = "https://oss.sonatype.org/content/repositories/snapshots/"
         }
     }
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
     }
 }
+
+
+repositories {
+    maven {
+        name 'CB Maven FS'
+        url "http://chickenbones.net/maven/"
+    }
+    maven {
+        name 'DVS1 Maven FS'
+        url 'http://dvs1.progwml6.com/files/maven'
+    }
+    maven {
+        name 'forge'
+        url 'http://files.minecraftforge.net/maven'
+    }
+}
+
+
 apply plugin: 'net.minecraftforge.gradle.forge'
 
-/*
-// for people who want stable - not yet functional for MC 1.8.8 - we require the forgegradle 2.1 snapshot
-plugins {
-    id "net.minecraftforge.gradle.forge" version "2.0.2"
-}
-*/
-version = "1.0"
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
 group= "org.undergroundbunker.harshworld" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "modid"
+archivesBaseName = "harshworld"
+
+ext.configFile = file "build.properties"
+configFile.withReader {
+    // Load config.  It shall from now be referenced as simply config or project.config
+    def prop = new Properties()
+    prop.load(it)
+    project.ext.config = new ConfigSlurper().parse prop
+}
+
+task buildInfo {
+    def cmd = "git rev-parse --short HEAD"
+    def proc = cmd.execute()
+    proc.waitFor()
+    if (proc.exitValue() == 0) {
+        ext.revision = proc.text.trim()
+    } else {
+        ext.revision = "GITBORK"
+    }
+
+    if (System.getenv().BUILD_NUMBER != null) {
+        ext.buildNum = "jenkins${System.getenv().BUILD_NUMBER}"
+    } else {
+        ext.buildNum = "DEV.${project.buildInfo.revision}"
+    }
+}
+
+ext.artifact_version = 'NFG'
+if (System.getenv().ARTIFACT_VERSION == null) {
+    artifact_version = "${config.mod_version}.${project.buildInfo.buildNum}"
+}
+if (System.getenv().ARTIFACT_VERSION != null) {
+    artifact_version = "${system.getenv().ARTIFACT_VERSION}"
+}
+
+
+version = "${config.minecraft_version}-${artifact_version}"
+
+
 
 minecraft {
-    version = "1.9.4-12.17.0.1954"
+    version = config.minecraft_version + "-" + config.forge_version
     runDir = "run"
-    
-    // the mappings can be changed at any time, and must be in the following format.
-    // snapshot_YYYYMMDD   snapshot are built nightly.
-    // stable_#            stables are built at the discretion of the MCP team.
-    // Use non-default mappings at your own risk. they may not allways work.
-    // simply re-run your setup task after changing the mappings to update your workspace.
-    mappings = "snapshot_20160518"
-    // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
+    replace '${version}', project.version
+    useDepAts = true
+    mappings = config.mappings
 }
 
 dependencies {
@@ -80,3 +133,18 @@ processResources
         exclude 'mcmod.info'
     }
 }
+
+if (!project.hasProperty("keystore_location")) // keystore location
+    ext.keystore_location = ".";
+
+if (!project.hasProperty("keystore_user_alias")) // keystore user alias
+    ext.keystore_user_alias = "";
+if (!project.hasProperty("sftp_username"))
+    ext.sftp_username = "";
+if (!project.hasProperty("sftp_key"))
+    ext.sftp_key = "";
+if (!project.hasProperty("keystore_user_password")) // keystore user pass
+    ext.keystore_user_password = "";
+if (System.getenv().KSK_PW != null)
+    ext.keystore_user_password =System.getenv().KSK_PW;
+
