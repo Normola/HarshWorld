@@ -35,11 +35,10 @@ repositories {
     }
 }
 
-
 apply plugin: 'net.minecraftforge.gradle.forge'
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+//sourceCompatibility = 1.8
+//targetCompatibility = 1.8
 
 group= "org.undergroundbunker.harshworld" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "harshworld"
@@ -77,10 +76,7 @@ if (System.getenv().ARTIFACT_VERSION != null) {
     artifact_version = "${system.getenv().ARTIFACT_VERSION}"
 }
 
-
 version = "${config.minecraft_version}-${artifact_version}"
-
-
 
 minecraft {
     version = config.minecraft_version + "-" + config.forge_version
