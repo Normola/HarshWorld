@@ -1,16 +1,18 @@
 [{
-    "modid" : "harshworld",
+    "modid": "harshworld",
     "name": "Harsh World",
-    "description": "A nice place to visit but I wouldn't want to live there...",
+    "description": "A nice place to visit but I wouldn't want to live there",
     "version": "${version}",
+    "mcversion": "${mcversion}",
     "url": "https://github.com/Normola/HarshWorld",
     "updateUrl": "",
     "authorList": [
-        "JT"
+      "JT",
+      "Thanks to the Slime Knights"
     ],
-    "credits": "JT, major props to Slime Knights!",
-    logoFile: "",
-    "screenshots": "",
-    "parent": "",
-    "dependencies": ""
+    "credits": "JT, Bit Props to the Slime Knights",
+    "logoFile": "logo.png",
+    "screenshots": [],
+    "parent":"",
+    "dependencies": []
 }]

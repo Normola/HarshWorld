@@ -144,17 +144,3 @@ jar {
     }
 }
 
-if (!project.hasProperty("keystore_location")) // keystore location
-    ext.keystore_location = ".";
-
-if (!project.hasProperty("keystore_user_alias")) // keystore user alias
-    ext.keystore_user_alias = "";
-if (!project.hasProperty("sftp_username"))
-    ext.sftp_username = "";
-if (!project.hasProperty("sftp_key"))
-    ext.sftp_key = "";
-if (!project.hasProperty("keystore_user_password")) // keystore user pass
-    ext.keystore_user_password = "";
-if (System.getenv().KSK_PW != null)
-    ext.keystore_user_password =System.getenv().KSK_PW;
-
